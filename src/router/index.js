@@ -1,17 +1,31 @@
 import { createWebHistory, createRouter } from "vue-router";
 
 
-const routes = [
-{
-    path: "/",
-    alias: "/contactbook", 
-    name: "ContactBook",
-    component: () => import("../views/ContactBook"),
-},
+const routes = [{
+        path: "/",
+        alias: "/contactbook",
+        name: "ContactBook",
+        component: () =>
+            import ("../views/ContactBook"),
+    },
+    {
+        path: "/contacts/:id",
+        name: "EditContact",
+        component: () =>
+            import ("../views/ContactEdit"),
+    },
+    {
+        path: "/add",
+        name: "NewContact",
+        component: () =>
+            import ("../views/ContactAddnew"),
+    },
 ];
 
 
-const router = createRouter({ history: createWebHistory(), routes,
+const router = createRouter({
+    history: createWebHistory(),
+    routes,
 });
 
 
