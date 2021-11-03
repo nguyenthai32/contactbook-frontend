@@ -1,4 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
+import store from "../store"
 
 
 const routes = [{
@@ -20,6 +21,24 @@ const routes = [{
         component: () =>
             import ("../views/ContactAddnew"),
     },
+    {
+        path: "/login",
+        name: "Login",
+        component: () =>
+            import ("../views/UserLogin.vue"),
+    },
+    {
+        path: "/register",
+        name: "Register",
+        component: () =>
+            import ("../views/UserRegister.vue"),
+    },
+    {
+        path: "/profile",
+        name: "Profile",
+        component: () =>
+            import ("../views/UserProfile.vue"),
+    }
 ];
 
 
@@ -28,5 +47,15 @@ const router = createRouter({
     routes,
 });
 
+router.beforeEach((to, from, next) => {
+    const publicPages = ["/login", "/register"];
+    const authRequired = !publicPages.includes(to.path);
+    const loggedIn = store.getters.userLoggedIn;
+    if (authRequired && !loggedIn) {
+        next("/login");
+    } else {
+        next();
+    }
+});
 
 export default router;
